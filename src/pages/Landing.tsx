@@ -91,13 +91,11 @@ const Landing = () => {
             <div className="hero-media">
               <div className="frame">
                 <div className="on-air">ON AIR</div>
-                <div className="flex items-center justify-center h-full">
-                  <Users className="h-24 w-24 text-muted-foreground" />
-                  <div className="ml-4">
-                    <p className="text-sm text-muted-foreground">Jay & Harley</p>
-                    <p className="text-xs text-muted-foreground">Hero Image</p>
-                  </div>
-                </div>
+                <img 
+                  src="/jay-and-harley.jpeg" 
+                  alt="Jay and Harley recording No Plan B podcast"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
