@@ -20,7 +20,17 @@ const Layout = ({ children }: LayoutProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Background Image */}
+      <div 
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-5"
+        style={{
+          backgroundImage: 'url(/podcast-studio-bg.png)',
+          backgroundAttachment: 'fixed'
+        }}
+      ></div>
+      
+      <div className="relative z-10">
       {/* Navigation */}
       <nav className="site-header">
         <div className="container">
@@ -100,6 +110,7 @@ const Layout = ({ children }: LayoutProps) => {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
