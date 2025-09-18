@@ -22,27 +22,26 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b border-border bg-background backdrop-blur">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center space-x-2">
+      <nav className="site-header">
+        <div className="container">
+          <div className="bar">
+            <div className="brand">
+              <Link to="/">
                 <img 
                   src="/no-pb-logo.jpg" 
-                  alt="No Plan B Podcast" 
-                  className="h-8 w-auto"
+                  alt="No Plan B Podcast"
                 />
               </Link>
             </div>
             
-            <div className="hidden md:flex md:items-center md:space-x-8">
+            <div className="nav hidden md:flex">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`text-sm font-bold italic transition-colors hover:text-secondary ${
+                  className={`font-bold italic transition-colors hover:opacity-100 ${
                     location.pathname === item.href
-                      ? 'text-secondary'
+                      ? 'is-active text-brand'
                       : 'text-foreground'
                   }`}
                 >
@@ -51,7 +50,7 @@ const Layout = ({ children }: LayoutProps) => {
               ))}
             </div>
 
-            <div className="md:hidden">
+            <div className="header-cta md:hidden">
               <Button variant="ghost" size="sm">
                 Menu
               </Button>

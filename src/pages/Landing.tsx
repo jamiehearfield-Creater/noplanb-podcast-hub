@@ -57,48 +57,46 @@ const Landing = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 text-center lg:text-left">
-              <img 
-                src="/no-pb-logo.jpg" 
-                alt="No Plan B Podcast" 
-                className="w-full max-w-lg mx-auto lg:mx-0 mb-6"
-              />
-              <p className="text-xl sm:text-2xl text-secondary font-bold italic mb-8">
-                Mindset. Startups. Grit.
+      <section className="hero">
+        <div className="container">
+          <div className="wrap">
+            <div className="hero-copy">
+              <h1>
+                No Plan <span className="accent">B</span>
+              </h1>
+              <p>
+                Mindset. Startups. Grit. Join Jay and Harley as they explore what it takes to succeed when there's no backup plan.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" asChild>
-                  <a 
-                    href="https://open.spotify.com/show/5ygCkKbn7il15DLX71Tk4N?si=d311e06c364c4b1d"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Play className="mr-2 h-5 w-5" />
-                    Listen on Spotify
-                  </a>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <a 
-                    href="https://www.youtube.com/@NoPlanB.podcast"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink className="mr-2 h-5 w-5" />
-                    Watch on YouTube
-                  </a>
-                </Button>
+              <div className="hero-ctas">
+                <a 
+                  href="https://open.spotify.com/show/5ygCkKbn7il15DLX71Tk4N?si=d311e06c364c4b1d"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  <Play className="h-5 w-5" />
+                  Listen on Spotify
+                </a>
+                <a 
+                  href="https://www.youtube.com/@NoPlanB.podcast"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  Watch on YouTube
+                </a>
               </div>
             </div>
-            <div className="flex-1 max-w-md">
-              {/* Hero image placeholder - will be replaced with actual Jay & Harley image */}
-              <div className="aspect-square bg-muted rounded-lg flex items-center justify-center">
-                <Users className="h-24 w-24 text-muted-foreground" />
-                <div className="ml-4">
-                  <p className="text-sm text-muted-foreground">Jay & Harley</p>
-                  <p className="text-xs text-muted-foreground">Hero Image</p>
+            <div className="hero-media">
+              <div className="frame">
+                <div className="on-air">ON AIR</div>
+                <div className="flex items-center justify-center h-full">
+                  <Users className="h-24 w-24 text-muted-foreground" />
+                  <div className="ml-4">
+                    <p className="text-sm text-muted-foreground">Jay & Harley</p>
+                    <p className="text-xs text-muted-foreground">Hero Image</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -107,8 +105,8 @@ const Landing = () => {
       </section>
 
       {/* Latest Episodes */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-16">
+        <div className="container">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-foreground">Latest Episodes</h2>
             <Link to="/episodes">
@@ -161,8 +159,8 @@ const Landing = () => {
 
       {/* Sponsors Spotlight */}
       {sponsors.length > 0 && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-card">
-          <div className="container mx-auto max-w-6xl">
+        <section className="py-16 bg-card">
+          <div className="container">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-foreground">Our Sponsors</h2>
               <Link to="/sponsors">
@@ -205,8 +203,8 @@ const Landing = () => {
       )}
 
       {/* Subscribe Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-2xl text-center">
+      <section className="py-16">
+        <div className="container max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Stay Updated
           </h2>
@@ -223,8 +221,8 @@ const Landing = () => {
       </section>
 
       {/* About Teaser */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-card">
-        <div className="container mx-auto max-w-4xl text-center">
+      <section className="py-16 bg-card">
+        <div className="container max-w-4xl text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             About No Plan B
           </h2>
