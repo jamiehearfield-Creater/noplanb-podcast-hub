@@ -77,24 +77,23 @@ const Landing = () => {
                   <Play className="h-5 w-5" />
                   Listen on Spotify
                 </a>
-                <a 
-                  href="https://www.youtube.com/@NoPlanB.podcast"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-ghost"
-                >
+                <Link to="/episodes" className="btn btn-ghost">
                   <ExternalLink className="h-5 w-5" />
-                  Watch on YouTube
-                </a>
+                  Browse Episodes
+                </Link>
+                <Link to="/reels" className="btn btn-ghost">
+                  <ExternalLink className="h-5 w-5" />
+                  Watch Reels
+                </Link>
               </div>
             </div>
             <div className="hero-media">
-              <div className="frame">
+              <div className="frame" style={{ aspectRatio: 'auto', minHeight: '400px' }}>
                 <div className="on-air">ON AIR</div>
                 <img 
                   src="/jay-and-harley.jpeg" 
                   alt="Jay and Harley recording No Plan B podcast"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
