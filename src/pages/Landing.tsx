@@ -57,7 +57,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background via-background to-muted/20">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="flex-1 text-center lg:text-left">
@@ -66,7 +66,7 @@ const Landing = () => {
                 alt="No Plan B Podcast" 
                 className="w-full max-w-lg mx-auto lg:mx-0 mb-6"
               />
-              <p className="text-xl sm:text-2xl text-muted-foreground mb-8">
+              <p className="text-xl sm:text-2xl text-secondary font-bold italic mb-8">
                 Mindset. Startups. Grit.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -161,7 +161,7 @@ const Landing = () => {
 
       {/* Sponsors Spotlight */}
       {sponsors.length > 0 && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/20">
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-card">
           <div className="container mx-auto max-w-6xl">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-foreground">Our Sponsors</h2>
@@ -223,7 +223,7 @@ const Landing = () => {
       </section>
 
       {/* About Teaser */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/20">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-card">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             About No Plan B

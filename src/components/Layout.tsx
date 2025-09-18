@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <nav className="border-b border-border bg-background backdrop-blur">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
@@ -40,10 +40,10 @@ const Layout = ({ children }: LayoutProps) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-secondary ${
+                  className={`text-sm font-bold italic transition-colors hover:text-secondary ${
                     location.pathname === item.href
-                      ? 'text-foreground'
-                      : 'text-muted-foreground'
+                      ? 'text-secondary'
+                      : 'text-foreground'
                   }`}
                 >
                   {item.name}
