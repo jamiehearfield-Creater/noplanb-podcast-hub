@@ -214,6 +214,15 @@ a {
   }
   
   .hero .wrap {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: clamp(16px, 2vw, 28px);
+    box-shadow: 
+      0 0 40px rgba(225, 29, 46, 0.15),
+      0 0 80px rgba(225, 29, 46, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    margin: clamp(16px, 2.5vw, 32px);
     display: grid;
     grid-template-columns: 1.1fr .9fr;
     align-items: center;
