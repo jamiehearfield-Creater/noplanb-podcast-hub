@@ -101,6 +101,60 @@ export type Database = {
         }
         Relationships: []
       }
+      episodes: {
+        Row: {
+          amazon_link: string | null
+          apple_link: string | null
+          created_at: string
+          description: string | null
+          duration: string | null
+          featured: boolean | null
+          guest: string | null
+          id: string
+          publish_date: string | null
+          spotify_link: string | null
+          tags: string[] | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          youtube_link: string | null
+        }
+        Insert: {
+          amazon_link?: string | null
+          apple_link?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          featured?: boolean | null
+          guest?: string | null
+          id?: string
+          publish_date?: string | null
+          spotify_link?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          youtube_link?: string | null
+        }
+        Update: {
+          amazon_link?: string | null
+          apple_link?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          featured?: boolean | null
+          guest?: string | null
+          id?: string
+          publish_date?: string | null
+          spotify_link?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          youtube_link?: string | null
+        }
+        Relationships: []
+      }
       equipment_types: {
         Row: {
           check_frequency_days: number
@@ -124,6 +178,36 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hosts: {
+        Row: {
+          bio: string | null
+          created_at: string
+          id: string
+          name: string
+          photo_url: string | null
+          socials: Json | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          photo_url?: string | null
+          socials?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          photo_url?: string | null
+          socials?: Json | null
           updated_at?: string
         }
         Relationships: []
@@ -404,6 +488,105 @@ export type Database = {
           waist_cm?: number | null
           weight_kg?: number | null
           whatsapp_number?: string | null
+        }
+        Relationships: []
+      }
+      reels: {
+        Row: {
+          caption: string | null
+          created_at: string
+          embed_url: string
+          id: string
+          instagram_id: string | null
+          publish_date: string | null
+          thumbnail_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          embed_url: string
+          id?: string
+          instagram_id?: string | null
+          publish_date?: string | null
+          thumbnail_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          embed_url?: string
+          id?: string
+          instagram_id?: string | null
+          publish_date?: string | null
+          thumbnail_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sponsors: {
+        Row: {
+          created_at: string
+          description: string | null
+          featured: boolean | null
+          id: string
+          logo_url: string | null
+          name: string
+          updated_at: string
+          website_link: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          updated_at?: string
+          website_link?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          updated_at?: string
+          website_link?: string | null
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          marketing_consent: boolean | null
+          mobile: string | null
+          privacy_consent: boolean | null
+          subscribed_at: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          marketing_consent?: boolean | null
+          mobile?: string | null
+          privacy_consent?: boolean | null
+          subscribed_at?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          marketing_consent?: boolean | null
+          mobile?: string | null
+          privacy_consent?: boolean | null
+          subscribed_at?: string
+          updated_at?: string
         }
         Relationships: []
       }
