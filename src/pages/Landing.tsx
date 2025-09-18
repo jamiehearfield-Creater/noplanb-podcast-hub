@@ -61,9 +61,11 @@ const Landing = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-                No Plan B Podcast
-              </h1>
+              <img 
+                src="/no-pb-logo.jpg" 
+                alt="No Plan B Podcast" 
+                className="w-full max-w-lg mx-auto lg:mx-0 mb-6"
+              />
               <p className="text-xl sm:text-2xl text-muted-foreground mb-8">
                 Mindset. Startups. Grit.
               </p>

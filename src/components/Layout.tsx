@@ -27,7 +27,11 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="text-xl font-bold text-foreground">No Plan B Podcast</div>
+                <img 
+                  src="/no-pb-logo.jpg" 
+                  alt="No Plan B Podcast" 
+                  className="h-8 w-auto"
+                />
               </Link>
             </div>
             
