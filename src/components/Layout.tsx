@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
+import VisualUpgradePack from './VisualUpgradePack';
 
 interface LayoutProps {
   children: ReactNode;
@@ -111,6 +112,8 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
       </footer>
       </div>
+      
+      <VisualUpgradePack />
     </div>
   );
 };
