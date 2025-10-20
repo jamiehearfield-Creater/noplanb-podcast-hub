@@ -28,22 +28,16 @@ const App = () => (
         <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminStats />} />
-          <Route path="*" element={
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/episodes" element={<Episodes />} />
-                <Route path="/reels" element={<Reels />} />
-                <Route path="/sponsors" element={<Sponsors />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/subscribe" element={<Subscribe />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/cookies" element={<Cookies />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
-          } />
+          <Route path="/" element={<Layout><Landing /></Layout>} />
+          <Route path="/episodes" element={<Layout><Episodes /></Layout>} />
+          <Route path="/reels" element={<Layout><Reels /></Layout>} />
+          <Route path="/sponsors" element={<Layout><Sponsors /></Layout>} />
+          <Route path="/about" element={<Layout><About /></Layout>} />
+          <Route path="/subscribe" element={<Layout><Subscribe /></Layout>} />
+          <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
+          <Route path="/cookies" element={<Layout><Cookies /></Layout>} />
+          <Route path="/terms" element={<Layout><Terms /></Layout>} />
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
