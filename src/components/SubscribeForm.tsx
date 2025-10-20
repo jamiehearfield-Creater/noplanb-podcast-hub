@@ -5,6 +5,27 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { z } from 'zod';
+
+const subscriberSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address')
+    .max(255, 'Email must be less than 255 characters'),
+  mobile: z
+    .string()
+    .trim()
+    .regex(/^\+?[1-9]\d{1,14}$/, 'Please enter a valid phone number (e.g., +447123456789)')
+    .max(20, 'Phone number is too long')
+    .optional()
+    .or(z.literal('')),
+  marketing_consent: z.boolean(),
+  privacy_consent: z.literal(true, {
+    errorMap: () => ({ message: 'You must accept the privacy policy to subscribe' }),
+  }),
+});
 
 interface SubscribeFormProps {
   className?: string;
@@ -20,11 +41,20 @@ const SubscribeForm = ({ className }: SubscribeFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!email || !privacyConsent) {
+
+    // Validate input using zod schema
+    const validationResult = subscriberSchema.safeParse({
+      email: email,
+      mobile: mobile || '',
+      marketing_consent: marketingConsent,
+      privacy_consent: privacyConsent,
+    });
+
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
       toast({
-        title: "Error",
-        description: "Please provide your email and accept the privacy policy.",
+        title: "Validation Error",
+        description: firstError.message,
         variant: "destructive",
       });
       return;
@@ -33,13 +63,15 @@ const SubscribeForm = ({ className }: SubscribeFormProps) => {
     setIsSubmitting(true);
 
     try {
+      const validatedData = validationResult.data;
+      
       const { error } = await supabase
         .from('subscribers')
         .insert({
-          email,
-          mobile: mobile || null,
-          marketing_consent: marketingConsent,
-          privacy_consent: privacyConsent,
+          email: validatedData.email,
+          mobile: validatedData.mobile || null,
+          marketing_consent: validatedData.marketing_consent,
+          privacy_consent: validatedData.privacy_consent,
         });
 
       if (error) {
@@ -49,7 +81,12 @@ const SubscribeForm = ({ className }: SubscribeFormProps) => {
             description: "This email is already subscribed to our updates.",
           });
         } else {
-          throw error;
+          // Sanitize error message to avoid leaking database details
+          toast({
+            title: "Error",
+            description: "Unable to complete subscription. Please try again.",
+            variant: "destructive",
+          });
         }
       } else {
         toast({
