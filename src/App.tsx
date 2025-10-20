@@ -14,6 +14,8 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import Auth from "./pages/Auth";
+import AdminStats from "./pages/AdminStats";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<AdminStats />} />
           <Route path="*" element={
             <Layout>
               <Routes>
