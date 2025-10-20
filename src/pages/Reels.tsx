@@ -13,6 +13,20 @@ interface Reel {
   instagram_id: string;
 }
 
+const extractYouTubeShortId = (url: string): string | null => {
+  if (!url) return null;
+  const patterns = [
+    /youtube\.com\/shorts\/([^&\s?]+)/,
+    /youtu\.be\/([^&\s?]+)/,
+    /youtube\.com\/embed\/([^&\s?]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
+
 const Reels = () => {
   const [reels, setReels] = useState<Reel[]>([]);
   const [loading, setLoading] = useState(true);
@@ -101,51 +115,64 @@ const Reels = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {reels.map((reel) => (
-            <Card key={reel.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <CardContent className="p-0">
-                <div className="aspect-[9/16] bg-muted relative">
-                  {reel.thumbnail_url ? (
-                    <img 
-                      src={reel.thumbnail_url}
-                      alt="Reel thumbnail"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Instagram className="h-12 w-12 text-muted-foreground" />
-                    </div>
-                  )}
+          {reels.map((reel) => {
+            const youtubeShortId = extractYouTubeShortId(reel.embed_url);
+            
+            return (
+              <Card key={reel.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <CardContent className="p-0">
+                  <div className="aspect-[9/16] bg-muted relative">
+                    {youtubeShortId ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${youtubeShortId}`}
+                        title={reel.caption || 'YouTube Short'}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : reel.thumbnail_url ? (
+                      <>
+                        <img 
+                          src={reel.thumbnail_url}
+                          alt="Reel thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                        {reel.embed_url && (
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                            <Button size="sm" asChild>
+                              <a href={reel.embed_url} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                View Reel
+                              </a>
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Instagram className="h-12 w-12 text-muted-foreground" />
+                      </div>
+                    )}
+                  </div>
                   
-                  {reel.embed_url && (
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                      <Button size="sm" asChild>
-                        <a href={reel.embed_url} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          View Reel
-                        </a>
-                      </Button>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="p-4">
-                  {reel.caption && (
-                    <p className="text-sm text-muted-foreground line-clamp-3 mb-2">
-                      {reel.caption}
-                    </p>
-                  )}
-                  
-                  {reel.publish_date && (
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {formatDate(reel.publish_date)}
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="p-4">
+                    {reel.caption && (
+                      <p className="text-sm text-muted-foreground line-clamp-3 mb-2">
+                        {reel.caption}
+                      </p>
+                    )}
+                    
+                    {reel.publish_date && (
+                      <div className="flex items-center text-xs text-muted-foreground">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {formatDate(reel.publish_date)}
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

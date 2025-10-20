@@ -22,6 +22,19 @@ interface Episode {
   duration: string;
 }
 
+const extractYouTubeVideoId = (url: string): string | null => {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/,
+    /youtube\.com\/embed\/([^&\s]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
+
 const Episodes = () => {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -109,83 +122,104 @@ const Episodes = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredEpisodes.map((episode) => (
-            <Card key={episode.id} className={`hover:shadow-lg transition-shadow ${episode.featured ? 'border-secondary' : ''}`}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <CardTitle className="line-clamp-2 flex-1">{episode.title}</CardTitle>
-                  {episode.featured && (
-                    <Badge variant="secondary" className="ml-2 shrink-0">
-                      Featured
-                    </Badge>
-                  )}
-                </div>
-                
-                {episode.guest && (
-                  <p className="text-sm text-muted-foreground">Guest: {episode.guest}</p>
-                )}
-                
-                {episode.publish_date && (
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    {formatDate(episode.publish_date)}
+        <div className="grid grid-cols-1 gap-8">
+          {filteredEpisodes.map((episode) => {
+            const youtubeVideoId = extractYouTubeVideoId(episode.youtube_link);
+            
+            return (
+              <Card key={episode.id} className={`hover:shadow-lg transition-shadow ${episode.featured ? 'border-secondary' : ''}`}>
+                {youtubeVideoId && (
+                  <div className="aspect-video w-full">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+                      title={episode.title}
+                      className="w-full h-full rounded-t-lg"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
                   </div>
                 )}
-              </CardHeader>
-              
-              <CardContent>
-                {episode.description && (
-                  <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                    {episode.description}
-                  </p>
-                )}
-
-                {episode.tags && episode.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {episode.tags.slice(0, 3).map((tag, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {tag}
+                
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="line-clamp-2 flex-1">{episode.title}</CardTitle>
+                    {episode.featured && (
+                      <Badge variant="secondary" className="ml-2 shrink-0">
+                        Featured
                       </Badge>
-                    ))}
+                    )}
                   </div>
-                )}
+                  
+                  {episode.guest && (
+                    <p className="text-sm text-muted-foreground">Guest: {episode.guest}</p>
+                  )}
+                  
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                    {episode.publish_date && (
+                      <div className="flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {formatDate(episode.publish_date)}
+                      </div>
+                    )}
+                    {episode.duration && (
+                      <span>{episode.duration}</span>
+                    )}
+                  </div>
+                </CardHeader>
+                
+                <CardContent>
+                  {episode.description && (
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {episode.description}
+                    </p>
+                  )}
 
-                <div className="flex flex-wrap gap-2">
-                  {episode.spotify_link && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={episode.spotify_link} target="_blank" rel="noopener noreferrer">
-                        <Play className="h-3 w-3 mr-1" />
-                        Spotify
-                      </a>
-                    </Button>
+                  {episode.tags && episode.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {episode.tags.map((tag, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                   )}
-                  {episode.youtube_link && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={episode.youtube_link} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-3 w-3 mr-1" />
-                        YouTube
-                      </a>
-                    </Button>
-                  )}
-                  {episode.apple_link && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={episode.apple_link} target="_blank" rel="noopener noreferrer">
-                        Apple
-                      </a>
-                    </Button>
-                  )}
-                  {episode.amazon_link && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={episode.amazon_link} target="_blank" rel="noopener noreferrer">
-                        Amazon
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                  <div className="flex flex-wrap gap-2">
+                    {episode.spotify_link && (
+                      <Button size="sm" variant="outline" asChild>
+                        <a href={episode.spotify_link} target="_blank" rel="noopener noreferrer">
+                          <Play className="h-3 w-3 mr-1" />
+                          Spotify
+                        </a>
+                      </Button>
+                    )}
+                    {episode.youtube_link && (
+                      <Button size="sm" variant="outline" asChild>
+                        <a href={episode.youtube_link} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          YouTube
+                        </a>
+                      </Button>
+                    )}
+                    {episode.apple_link && (
+                      <Button size="sm" variant="outline" asChild>
+                        <a href={episode.apple_link} target="_blank" rel="noopener noreferrer">
+                          Apple
+                        </a>
+                      </Button>
+                    )}
+                    {episode.amazon_link && (
+                      <Button size="sm" variant="outline" asChild>
+                        <a href={episode.amazon_link} target="_blank" rel="noopener noreferrer">
+                          Amazon
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
