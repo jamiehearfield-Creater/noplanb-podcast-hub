@@ -27,6 +27,89 @@ const extractYouTubeShortId = (url: string): string | null => {
   return null;
 };
 
+const hardcodedReels = [
+  {
+    id: '1',
+    embed_url: 'https://www.youtube.com/embed/U3BaDTMkvQ0',
+    caption: 'He turned a religion into a business & made millions🤣',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '2',
+    embed_url: 'https://www.youtube.com/embed/d7Ya-Y0Kv78',
+    caption: 'Why can\'t we be full of ourselves?',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '3',
+    embed_url: 'https://www.youtube.com/embed/n0dflCF_Z2Y',
+    caption: 'Having a baby changed my life',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '4',
+    embed_url: 'https://www.youtube.com/embed/rCOY9cuqdCE',
+    caption: 'Debbie talks about the dark side of the aesthetics game',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '5',
+    embed_url: 'https://www.youtube.com/embed/mvWQNb0A7KY',
+    caption: 'Working away a lot isn\'t for the weak. Need a strong woman by your side',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '6',
+    embed_url: 'https://www.youtube.com/embed/6ycdwA7eLZ0',
+    caption: 'Wild night to be a doorman',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '7',
+    embed_url: 'https://www.youtube.com/embed/kS1SQ8hQNTE',
+    caption: 'The problem was always trying to fit in',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '8',
+    embed_url: 'https://www.youtube.com/embed/7wdCNyjM9HA',
+    caption: 'Jay Short 3',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '9',
+    embed_url: 'https://www.youtube.com/embed/WhaLygBgJFU',
+    caption: 'Jay Short 2',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  },
+  {
+    id: '10',
+    embed_url: 'https://www.youtube.com/embed/0mJBR4He794',
+    caption: 'Jay Short 1',
+    thumbnail_url: '',
+    publish_date: '',
+    instagram_id: ''
+  }
+];
+
 const Reels = () => {
   const [reels, setReels] = useState<Reel[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,9 +127,11 @@ const Reels = () => {
 
     if (error) {
       console.error('Error fetching reels:', error);
-    } else {
-      setReels(data || []);
     }
+    
+    // Combine hardcoded reels with database reels, with hardcoded reels first
+    const allReels = [...hardcodedReels, ...(data || [])];
+    setReels(allReels);
     setLoading(false);
   };
 
