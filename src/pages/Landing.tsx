@@ -25,6 +25,52 @@ interface Sponsor {
   website_link: string;
 }
 
+const hardcodedEpisodes: Episode[] = [
+  {
+    id: 'ep-001',
+    title: 'No Plan B - The Truth Behind It All',
+    description: 'Episode 001',
+    spotify_link: '',
+    youtube_link: 'https://www.youtube.com/embed/S0hIugZDT8Q',
+    publish_date: '2024-01-01',
+    guest: '',
+    thumbnail_url: ''
+  },
+  {
+    id: 'ep-002',
+    title: 'No Plan B - From Leeds Streets to Protecting Premier League Stars',
+    description: 'Episode 002',
+    spotify_link: '',
+    youtube_link: 'https://www.youtube.com/embed/r58GT-4Oyp8',
+    publish_date: '2024-01-02',
+    guest: '',
+    thumbnail_url: ''
+  },
+  {
+    id: 'ep-003',
+    title: 'No Plan B - From Council Estate to Scaling Multiple Businesses',
+    description: 'With Debbie Askey - Episode 003',
+    spotify_link: '',
+    youtube_link: 'https://www.youtube.com/embed/xy9ds6PiytY',
+    publish_date: '2024-01-03',
+    guest: 'Debbie Askey',
+    thumbnail_url: ''
+  }
+];
+
+const extractYouTubeVideoId = (url: string): string | null => {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/,
+    /youtube\.com\/embed\/([^&\s]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
+
 const Landing = () => {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
@@ -41,7 +87,9 @@ const Landing = () => {
       .order('publish_date', { ascending: false })
       .limit(3);
     
-    if (data) setEpisodes(data);
+    // Use hardcoded episodes if no database episodes exist
+    const allEpisodes = data && data.length > 0 ? data : hardcodedEpisodes;
+    setEpisodes(allEpisodes);
   };
 
   const fetchFeaturedSponsors = async () => {
@@ -118,37 +166,53 @@ const Landing = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {episodes.map((episode) => (
-                <Card key={episode.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <CardTitle className="line-clamp-2">{episode.title}</CardTitle>
-                    {episode.guest && (
-                      <p className="text-sm text-muted-foreground">Guest: {episode.guest}</p>
+              {episodes.map((episode) => {
+                const youtubeVideoId = extractYouTubeVideoId(episode.youtube_link);
+                
+                return (
+                  <Card key={episode.id} className="hover:shadow-lg transition-shadow">
+                    {youtubeVideoId && (
+                      <div className="aspect-video w-full">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+                          title={episode.title}
+                          className="w-full h-full rounded-t-lg"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
                     )}
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                      {episode.description}
-                    </p>
-                    <div className="flex gap-2">
-                      {episode.spotify_link && (
-                        <Button size="sm" variant="outline" asChild>
-                          <a href={episode.spotify_link} target="_blank" rel="noopener noreferrer">
-                            Spotify
-                          </a>
-                        </Button>
+                    
+                    <CardHeader>
+                      <CardTitle className="line-clamp-2">{episode.title}</CardTitle>
+                      {episode.guest && (
+                        <p className="text-sm text-muted-foreground">Guest: {episode.guest}</p>
                       )}
-                      {episode.youtube_link && (
-                        <Button size="sm" variant="outline" asChild>
-                          <a href={episode.youtube_link} target="_blank" rel="noopener noreferrer">
-                            YouTube
-                          </a>
-                        </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
+                        {episode.description}
+                      </p>
+                      <div className="flex gap-2">
+                        {episode.spotify_link && (
+                          <Button size="sm" variant="outline" asChild>
+                            <a href={episode.spotify_link} target="_blank" rel="noopener noreferrer">
+                              Spotify
+                            </a>
+                          </Button>
+                        )}
+                        {episode.youtube_link && (
+                          <Button size="sm" variant="outline" asChild>
+                            <a href={episode.youtube_link} target="_blank" rel="noopener noreferrer">
+                              YouTube
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>
