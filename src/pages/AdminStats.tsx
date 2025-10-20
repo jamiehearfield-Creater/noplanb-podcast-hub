@@ -54,10 +54,10 @@ const AdminStats = () => {
   });
 
   useEffect(() => {
-    if (!loading && (!user || !isAdmin)) {
+    if (!loading && !user) {
       navigate("/auth");
     }
-  }, [user, isAdmin, loading, navigate]);
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     if (isAdmin) {
@@ -203,8 +203,40 @@ const AdminStats = () => {
     );
   }
 
-  if (!user || !isAdmin) {
+  if (!user) {
     return null;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle>Admin Access Required</CardTitle>
+            <CardDescription>
+              Your account doesn't have admin privileges yet.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              To grant admin access, run this SQL command in your Supabase SQL Editor:
+            </p>
+            <code className="block bg-muted p-3 rounded text-xs">
+              INSERT INTO user_roles (user_id, role)<br />
+              VALUES ('{user.id}', 'admin');
+            </code>
+            <div className="flex gap-2">
+              <Button onClick={handleSignOut} variant="outline" className="flex-1">
+                Sign Out
+              </Button>
+              <Button onClick={() => window.location.reload()} className="flex-1">
+                Refresh
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return (

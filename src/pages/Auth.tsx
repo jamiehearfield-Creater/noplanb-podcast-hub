@@ -55,7 +55,7 @@ const Auth = () => {
           title: "Welcome back!",
           description: "You've successfully signed in.",
         });
-        navigate("/");
+        navigate("/admin");
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
