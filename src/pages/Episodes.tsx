@@ -35,6 +35,54 @@ const extractYouTubeVideoId = (url: string): string | null => {
   return null;
 };
 
+const hardcodedEpisodes: Episode[] = [
+  {
+    id: 'ep-001',
+    title: 'No Plan B - The Truth Behind It All',
+    description: 'Episode 001',
+    spotify_link: '',
+    youtube_link: 'https://www.youtube.com/embed/S0hIugZDT8Q',
+    apple_link: '',
+    amazon_link: '',
+    publish_date: '2024-01-01',
+    guest: '',
+    tags: [],
+    featured: false,
+    thumbnail_url: '',
+    duration: ''
+  },
+  {
+    id: 'ep-002',
+    title: 'No Plan B - From Leeds Streets to Protecting Premier League Stars',
+    description: 'Episode 002',
+    spotify_link: '',
+    youtube_link: 'https://www.youtube.com/embed/r58GT-4Oyp8',
+    apple_link: '',
+    amazon_link: '',
+    publish_date: '2024-01-02',
+    guest: '',
+    tags: [],
+    featured: false,
+    thumbnail_url: '',
+    duration: ''
+  },
+  {
+    id: 'ep-003',
+    title: 'No Plan B - From Council Estate to Scaling Multiple Businesses',
+    description: 'With Debbie Askey - Episode 003',
+    spotify_link: '',
+    youtube_link: 'https://www.youtube.com/embed/xy9ds6PiytY',
+    apple_link: '',
+    amazon_link: '',
+    publish_date: '2024-01-03',
+    guest: 'Debbie Askey',
+    tags: [],
+    featured: false,
+    thumbnail_url: '',
+    duration: ''
+  }
+];
+
 const Episodes = () => {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -53,9 +101,11 @@ const Episodes = () => {
 
     if (error) {
       console.error('Error fetching episodes:', error);
-    } else {
-      setEpisodes(data || []);
     }
+    
+    // Combine hardcoded episodes with database episodes, with hardcoded episodes first
+    const allEpisodes = [...hardcodedEpisodes, ...(data || [])];
+    setEpisodes(allEpisodes);
     setLoading(false);
   };
 
